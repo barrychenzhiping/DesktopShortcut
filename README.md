@@ -49,8 +49,6 @@ public class ExampleActivity extends DroidGap {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.loadUrl("file:///android_asset/www/index.html");
-        //GlobalConfig is a defined java class
-        GlobalConfig.CUR_ACTIVITY_CLASSNAME = this.getLocalClassName();
     }
 }
 </pre>
@@ -64,46 +62,44 @@ import org.apache.cordova.api.LOG;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.phonegap.emp.GlobalConfig;
-import org.phonegap.emp.R;
 
-import android.content.ComponentName;
+import com.example.kuaixin.MainActivity;
+import com.example.kuaixin.R;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.Intent.ShortcutIconResource;
 
 public class DeskTopShortCut extends CordovaPlugin {
     
-	@Override
-	public boolean execute(String action, JSONArray args,CallbackContext callbackContext) throws JSONException {
-		try{
-			JSONObject jo = args.getJSONObject(0);
-			String name = jo.getString("name");
-			addShortcut(name);
-			LOG.d("ShortCut","Create Short Succcess!");
-		}catch(Exception e){
-			LOG.d("ShortCut","Create Short Failed!"+e.toString());
-			return false;
-		}
-		return true;
-	}
-	private Context context;
-	private void addShortcut(String shortName){  
-		context = cordova.getActivity().getApplicationContext();
-	    Intent shortcut = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");  
-	           
-	    shortcut.putExtra(Intent.EXTRA_SHORTCUT_NAME, shortName);  
-	    shortcut.putExtra("duplicate", false); 
-	           
-	    ComponentName comp = new ComponentName(context.getPackageName(), "."+GlobalConfig.CUR_ACTIVITY_CLASSNAME);  
-	    shortcut.putExtra(Intent.EXTRA_SHORTCUT_INTENT, new Intent(Intent.ACTION_MAIN).setComponent(comp));  
-	   
-	    ShortcutIconResource iconRes = Intent.ShortcutIconResource.fromContext(context, R.drawable.notification);  
-	    shortcut.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconRes);  
-	    context.sendBroadcast(shortcut);  
-	}  
-}
+    @Override
+    public boolean execute(String action, JSONArray args,CallbackContext callbackContext) throws JSONException {
+        try{
+            JSONObject jo = args.getJSONObject(0);
+            String name = jo.getString("name");
+            addShortcut(name);
+            LOG.d("ShortCut","Create Short Succcess!");
+        }catch(Exception e){
+            LOG.d("ShortCut","Create Short Failed!"+e.toString());
+            return false;
+        }
+        return true;
+    }
+    private Context context;
+    private void addShortcut(String shortName){  
+        context = cordova.getActivity().getApplicationContext();
+        Intent shortcut = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");  
+               
+        shortcut.putExtra(Intent.EXTRA_SHORTCUT_NAME, shortName);  
+        shortcut.putExtra("duplicate", false); 
 
+        shortcut.putExtra(Intent.EXTRA_SHORTCUT_INTENT, new Intent(context,ExampleActivity.class));  
+       
+        ShortcutIconResource iconRes = Intent.ShortcutIconResource.fromContext(context, R.drawable.ic_launcher);  
+        shortcut.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconRes);  
+        context.sendBroadcast(shortcut);  
+    }  
+}
 </pre>
 
 
