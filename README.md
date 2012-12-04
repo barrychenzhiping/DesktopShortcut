@@ -16,7 +16,7 @@ The DesktopShortcut plugin allows you to create a shortcut to the desktop by you
 4.Call the plugin, specifying name, success function, and failure function<br/>
 <pre>
 window.plugins.DeskTopShortCut.create({
-    name: 'my shortcut',
+    name: 'my shortcut'},
     function() {}, // Success function
     function() {alert('Share failed')} // Failure function
 );
