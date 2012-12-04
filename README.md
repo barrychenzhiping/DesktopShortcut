@@ -11,7 +11,7 @@ The DesktopShortcut plugin allows you to create a shortcut to the desktop by you
 
 3.Register the plugin in the <b>plugins.xml</b>(android:res/xml/config.xml) file
 
-<plugin name="DeskTopShortCut" value="org.phonegap.plugins.deskshortcut.DeskTopShortCut"/>
+&lt;plugin name="DeskTopShortCut" value="org.phonegap.plugins.deskshortcut.DeskTopShortCut"/&gt;
 
 4.Call the plugin, specifying name, success function, and failure function<br/>
 <pre>
